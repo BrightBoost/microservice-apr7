@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: USER-GATEWAY-SERVICE
+  cloud:
+    gateway:
+        routes:
+        - id: USER-CONSUMER
+          uri: lb://USER-CONSUMER/
+          predicates:
+            - Path=/consume/**
+        - id: USER-PRODUCER
+          uri: lb://USER-PRODUCER/
+          predicates:
+            - Path=/produce/**
+    discovery:
+      locator:
+        enabled: true
+server:
+  port: 8090
+eureka:
+  client:
+    serviceURL:
+      defaultZone: http://localhost:8761/eureka
